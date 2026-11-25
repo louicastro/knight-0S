@@ -1,0 +1,9 @@
+[package]
+name = "libknight"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS user-space runtime and syscall wrapper SDK"
+
+[dependencies]
+knight-abi = { path = "../abi" }

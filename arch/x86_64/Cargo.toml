@@ -1,0 +1,10 @@
+[package]
+name = "knightos-arch-x86_64"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "x86-64 HAL implementation, GDT/IDT, APIC, ACPI, paging, and SMP bring-up"
+
+[dependencies]
+knightos-hal = { path = "../../kernel/hal" }
+knightboot-protocol = { path = "../../boot/protocol" }

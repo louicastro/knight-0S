@@ -1,0 +1,24 @@
+[package]
+name = "knight-shell"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS macOS-27-inspired desktop shell (menubar, dock, window launcher)"
+
+[lib]
+name = "knight_shell"
+path = "src/lib.rs"
+
+[[bin]]
+name = "shell"
+path = "src/main.rs"
+
+[dependencies]
+libknight = { path = "../sdk/libknight" }
+knightos-gpu-hal = { path = "../../graphics/gpu-hal" }
+knightos-themes = { path = "../../graphics/themes" }
+knight-compositor = { path = "../../graphics/compositor" }
+knight-ui-kit = { path = "../../graphics/ui-kit" }
+knight-terminal = { path = "../terminal" }
+knight-settings = { path = "../settings" }
+knightos-devmgr = { path = "../../services/devmgr" }

@@ -1,0 +1,9 @@
+[package]
+name = "knightos-ipc"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS IPC channels, capability transfer queues, Ports, and Futex tables"
+
+[dependencies]
+knight-abi = { path = "../../apps/sdk/abi" }

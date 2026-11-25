@@ -1,0 +1,9 @@
+[package]
+name = "knightos-gpu-hal"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS explicit GPU HAL, command buffer submission, GOP and VirtIO-GPU scanout"
+
+[dependencies]
+knightos-virtio = { path = "../../drivers/virtio" }

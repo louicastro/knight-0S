@@ -1,0 +1,10 @@
+[package]
+name = "knightos-mm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS Physical Memory Manager (PMM), Virtual Memory Manager (VMM), and kernel slab allocator"
+
+[dependencies]
+knightboot-protocol = { path = "../boot/protocol" }
+knightos-hal = { path = "../kernel/hal" }

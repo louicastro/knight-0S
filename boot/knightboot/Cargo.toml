@@ -1,0 +1,9 @@
+[package]
+name = "knightboot"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS custom UEFI bootloader (BOOTX64.EFI / BOOTAA64.EFI)"
+
+[dependencies]
+knightboot-protocol = { path = "../protocol" }

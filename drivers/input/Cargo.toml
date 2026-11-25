@@ -1,0 +1,6 @@
+[package]
+name = "knightos-input"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS HID / VirtIO-Input and keyboard/pointer event queue"

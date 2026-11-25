@@ -1,0 +1,10 @@
+[package]
+name = "knightos-arch-aarch64"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "ARM64 (AArch64) HAL implementation, VBAR_EL1 vectors, GICv3, Generic Timer, DTB/ACPI, and PSCI SMP"
+
+[dependencies]
+knightos-hal = { path = "../../kernel/hal" }
+knightboot-protocol = { path = "../../boot/protocol" }

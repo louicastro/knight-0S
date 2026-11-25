@@ -1,0 +1,12 @@
+[package]
+name = "knightos-devmgr"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS user-space PCIe device manager and capability hardware broker"
+
+[dependencies]
+libknight = { path = "../../apps/sdk/libknight" }
+knightos-virtio = { path = "../../drivers/virtio" }
+knightos-nvme = { path = "../../drivers/storage" }
+knightfs = { path = "../../fs/knightfs" }

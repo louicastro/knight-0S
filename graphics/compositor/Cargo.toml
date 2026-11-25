@@ -1,0 +1,10 @@
+[package]
+name = "knight-compositor"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS retained scene-graph compositor with vibrancy glass shaders, damage tracking, HiDPI, and direct scanout"
+
+[dependencies]
+knightos-gpu-hal = { path = "../gpu-hal" }
+knightos-themes = { path = "../themes" }

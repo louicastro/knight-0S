@@ -1,0 +1,8 @@
+[package]
+name = "knight-abi"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Shared KnightOS syscall numbers, status codes, capability rights, and IPC structures"
+
+[dependencies]

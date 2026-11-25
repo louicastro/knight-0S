@@ -1,0 +1,9 @@
+[package]
+name = "knightos-nvme"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS user-space PCIe NVMe storage driver"
+
+[dependencies]
+knightfs = { path = "../../fs/knightfs" }

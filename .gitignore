@@ -1,0 +1,38 @@
+# Build artifacts
+/target/
+/build/
+/out/
+/dist/
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.dylib
+*.efi
+*.img
+*.iso
+*.qcow2
+*.raw
+*.bin
+*.elf
+*.pdb
+*.d
+
+# UEFI firmware variable copies created during QEMU runs
+/tools/ovmf_vars*.fd
+OVMF_VARS*.fd
+AAVMF_VARS*.fd
+
+# Logs and debug dumps
+*.log
+qemu-serial.txt
+gdb.txt
+
+# Editor / OS junk
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db

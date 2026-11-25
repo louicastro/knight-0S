@@ -1,0 +1,11 @@
+[package]
+name = "initd"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS initial Ring 3 / EL0 user-space service"
+
+[dependencies]
+libknight = { path = "../../apps/sdk/libknight" }
+knightos-devmgr = { path = "../devmgr" }
+knightos-vfs = { path = "../../fs/vfs" }

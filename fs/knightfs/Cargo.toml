@@ -1,0 +1,6 @@
+[package]
+name = "knightfs"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightFS v1 zero-alloc no_std filesystem with CRC32 integrity verification"

@@ -1,0 +1,11 @@
+[package]
+name = "knight-terminal"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS native terminal emulator view"
+
+[dependencies]
+knightos-gpu-hal = { path = "../../graphics/gpu-hal" }
+knightos-themes = { path = "../../graphics/themes" }
+knight-ui-kit = { path = "../../graphics/ui-kit" }

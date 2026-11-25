@@ -1,0 +1,8 @@
+[package]
+name = "knightboot-protocol"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Versioned KnightBoot Info Protocol (KBIP) shared ABI between KnightBoot and the KnightOS kernel"
+
+[dependencies]

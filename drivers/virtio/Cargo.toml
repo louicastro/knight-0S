@@ -1,0 +1,6 @@
+[package]
+name = "knightos-virtio"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS user-space VirtIO Modern PCIe transport and virtio-blk driver"

@@ -1,0 +1,8 @@
+[package]
+name = "knightos-hal"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Architecture-independent Hardware Abstraction Layer traits for KnightOS"
+
+[dependencies]

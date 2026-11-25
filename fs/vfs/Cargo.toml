@@ -1,0 +1,9 @@
+[package]
+name = "knightos-vfs"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS user-space Virtual Filesystem abstraction"
+
+[dependencies]
+knightfs = { path = "../knightfs" }

@@ -1,0 +1,6 @@
+[package]
+name = "knightos-themes"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS macOS-inspired translucent glass design system tokens"

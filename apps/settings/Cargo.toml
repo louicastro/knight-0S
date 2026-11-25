@@ -1,0 +1,11 @@
+[package]
+name = "knight-settings"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS native system settings app view"
+
+[dependencies]
+knightos-gpu-hal = { path = "../../graphics/gpu-hal" }
+knightos-themes = { path = "../../graphics/themes" }
+knight-ui-kit = { path = "../../graphics/ui-kit" }

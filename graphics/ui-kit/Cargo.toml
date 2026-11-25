@@ -1,0 +1,11 @@
+[package]
+name = "knight-ui-kit"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS retained-mode native widget toolkit for KnightCompositor clients"
+
+[dependencies]
+knight-compositor = { path = "../compositor" }
+knightos-gpu-hal = { path = "../gpu-hal" }
+knightos-themes = { path = "../themes" }

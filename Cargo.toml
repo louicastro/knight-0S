@@ -1,0 +1,45 @@
+[workspace]
+resolver = "2"
+members = [
+    "apps/sdk/abi",
+    "apps/sdk/libknight",
+    "boot/protocol",
+    "boot/knightboot",
+    "kernel",
+    "kernel/hal",
+    "kernel/cap",
+    "kernel/ipc",
+    "kernel/sched",
+    "mm",
+    "arch/x86_64",
+    "arch/aarch64",
+    "drivers/input",
+    "drivers/storage",
+    "drivers/virtio",
+    "fs/knightfs",
+    "fs/vfs",
+    "graphics/gpu-hal",
+    "graphics/themes",
+    "graphics/compositor",
+    "graphics/ui-kit",
+    "apps/terminal",
+    "apps/settings",
+    "apps/shell",
+    "services/devmgr",
+    "services/initd",
+    "tools/xtask",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0 OR MIT"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+opt-level = 2
+lto = "thin"
+panic = "abort"
+strip = "symbols"

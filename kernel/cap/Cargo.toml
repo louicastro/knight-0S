@@ -1,0 +1,9 @@
+[package]
+name = "knightos-cap"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "KnightOS capability table (CNode), rights attenuation, and generational handle validation"
+
+[dependencies]
+knight-abi = { path = "../../apps/sdk/abi" }
