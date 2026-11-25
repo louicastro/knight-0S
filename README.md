@@ -1,72 +1,142 @@
 # KnightOS
 
-KnightOS is an independent operating-system project built from scratch in Rust, with minimal assembly. Its architecture targets **x86-64** and **ARM64 (AArch64)**, with a capability-based microkernel design and a custom UEFI boot path.
+[![Rust](https://img.shields.io/badge/Rust-nightly-orange.svg)](https://www.rust-lang.org/)
+[![Architectures](https://img.shields.io/badge/architecture-x86--64%20%7C%20AArch64-blue.svg)](docs/HARDWARE_SUPPORT.md)
+[![License](https://img.shields.io/badge/license-Apache--2.0%20OR%20MIT-green.svg)](Cargo.toml)
 
-> **Status:** Early development. The architecture, documentation, workspace, and development tooling are in place; the system is not production-ready. Treat desktop, driver, and Linux/Windows application compatibility features as design goals unless the roadmap marks them complete.
+**KnightOS** is an independent desktop operating system built from scratch for x86-64 and ARM64 hardware. It is not a Linux distribution or a derivative of Windows or macOS. The project explores a capability-based microkernel, Rust-first systems programming, user-space drivers, and a native desktop environment.
 
-## Project goals
+## Project Status
 
-- Build a small, memory-safe kernel with capability-based isolation.
-- Support x86-64 and ARM64 through architecture-specific hardware abstraction layers.
-- Develop native user-space services, a desktop compositor, and applications.
-- Explore Linux ELF and Windows PE application compatibility as longer-term goals.
+> [!WARNING]
+> KnightOS is in early development. Phase 1 is complete, and the Phase 2 kernel bring-up work is underway. It is not yet a bootable or usable desktop OS.
 
-See the [roadmap](docs/ROADMAP.md) for milestones and progress, and the [architecture overview](docs/OS_ARCHITECTURE.md) for the system design.
+The repository currently provides the architecture, specifications, workspace layout, ABI contract, build automation, and portions of the boot and system scaffolding. Planned behavior is documented as design targets, not implemented features.
 
-## Get started
+| Phase | Status | Focus |
+| :--- | :--- | :--- |
+| 1 - Foundation | Complete | Architecture, boot protocol, security model, toolchain, and repository structure |
+| 2 - Boot and Bring-Up | Next | UEFI boot, HAL, memory management, SMP, interrupts, and early kernel |
+| 3 - Microkernel | Planned | Capabilities, syscalls, IPC, scheduling, init services, and user-space drivers |
+| 4 - Desktop | Planned | Compositor, UI toolkit, native applications, storage, and real hardware support |
+| 5 - Compatibility | Planned | Linux and Windows application environments and PC gaming support |
 
-### Requirements
+See [docs/ROADMAP.md](docs/ROADMAP.md) for the implementation plan.
 
-Install the Rust toolchain pinned by `rust-toolchain.toml`, the targets and components it specifies, plus the platform tools needed for cross-compilation and QEMU. The [development setup guide](docs/DEVELOPMENT_SETUP.md) has installation instructions for Windows and Linux.
+## Design Highlights
 
-Check your environment from the repository root:
+- **Capability-based security:** Kernel objects are accessed through rights-bearing handles rather than ambient global authority.
+- **Rust-first implementation:** Memory-safe Rust provides the core implementation, with minimal architecture-specific assembly.
+- **Strict architecture isolation:** x86-64 and AArch64 code is isolated behind HAL and platform boundaries.
+- **UEFI boot support:** `knightboot` and the KnightBoot Info Protocol define the handoff from firmware to the kernel.
+- **Shared-memory IPC:** Channels, ports, wait sets, VMOs, and event packets form the planned user-space communication model.
+- **User-space drivers:** Device hosts aim to contain driver faults and enforce IOMMU-scoped device access.
+- **Native desktop stack:** KnightCompositor, a GPU HAL, UI kit, themes, shell, terminal, and settings applications.
+
+The public kernel-user contract is defined in [apps/sdk/abi/src/lib.rs](apps/sdk/abi/src/lib.rs).
+
+## Repository Layout
+
+```text
+boot/        UEFI bootloader and KnightBoot Info Protocol
+kernel/      Architecture-independent microkernel, HAL, capabilities, IPC, and scheduler
+arch/        x86-64 and AArch64 CPU, MMU, interrupt, and platform code
+mm/          Physical memory, virtual memory, VMOs, and allocators
+drivers/     Bus, storage, VirtIO, GPU, input, network, and audio driver infrastructure
+fs/          Virtual filesystem and native storage implementations
+services/    initd, device management, networking, audio, power, and compatibility services
+graphics/    Compositor, GPU HAL, UI kit, themes, and rendering infrastructure
+apps/        Native SDK and desktop applications
+tests/       Unit, integration, benchmark, and QEMU test areas
+docs/        Architecture, design, setup, hardware, security, and roadmap documentation
+tools/       Environment checks and Cargo xtask build automation
+```
+
+## Getting Started
+
+### 1. Check prerequisites
+
+Install Git and the pinned nightly Rust toolchain, then verify the required tools:
+
+```powershell
+rustup show
+.\tools\check-env.ps1
+```
+
+On Linux or macOS:
 
 ```bash
+rustup show
 ./tools/check-env.sh
 ```
 
-On Windows, run the PowerShell environment check script at `tools/check-env.ps1` from the repository root.
+### 2. Install Rust targets
 
-### Build and test
+The pinned toolchain includes the supported targets. If needed, install them manually:
 
 ```bash
-# Run host-side tests
-cargo xtask test
-
-# Build the bootloader, kernel, and initrd for x86-64
-cargo xtask build --arch x86_64
-
-# Run the QEMU smoke test (requires QEMU and UEFI firmware)
-cargo xtask qemu-test --arch x86_64
+rustup target add \
+  x86_64-unknown-uefi \
+  aarch64-unknown-uefi \
+  x86_64-unknown-none \
+  aarch64-unknown-none
 ```
 
-Use `--arch aarch64` for ARM64 builds and QEMU testing. See `cargo xtask help` for all available commands and options. The QEMU workflow and firmware requirements are documented in the [development setup guide](docs/DEVELOPMENT_SETUP.md).
+### 3. Run host tests
 
-## Repository map
+```bash
+cargo xtask test
+```
 
-| Path | Contents |
-| --- | --- |
-| `boot/` | UEFI bootloader and boot protocol |
-| `kernel/`, `arch/`, `mm/` | Kernel, CPU-specific code, and memory management |
-| `drivers/`, `fs/`, `services/` | Drivers, filesystems, and system services |
-| `graphics/`, `apps/` | Graphics stack, UI, and applications |
-| `tests/`, `tools/` | Tests, environment checks, build automation, and QEMU runners |
-| `docs/` | Architecture, design, setup, security, and roadmap documentation |
+### 4. Build and run
+
+```bash
+# Build all boot, kernel, and initrd artifacts
+cargo xtask build
+
+# Build one architecture
+cargo xtask build --arch x86_64
+cargo xtask build --arch aarch64
+
+# Run in QEMU
+cargo xtask run --arch x86_64
+cargo xtask run --arch aarch64
+```
+
+Use `cargo xtask --help` for the complete command list. Full toolchain installation and debugging instructions are available in [docs/DEVELOPMENT_SETUP.md](docs/DEVELOPMENT_SETUP.md).
 
 ## Documentation
 
-- [System architecture](docs/OS_ARCHITECTURE.md)
-- [Kernel design](docs/KERNEL_DESIGN.md)
-- [Boot process](docs/BOOT_PROCESS.md)
-- [Hardware support](docs/HARDWARE_SUPPORT.md)
-- [Security design](docs/SECURITY_DESIGN.md)
-- [Development setup](docs/DEVELOPMENT_SETUP.md)
-- [Engineering roadmap](docs/ROADMAP.md)
-- [Architecture decisions](docs/DECISIONS.md)
+| Document | Purpose |
+| :--- | :--- |
+| [OS Architecture](docs/OS_ARCHITECTURE.md) | System-wide model and component relationships |
+| [Kernel Design](docs/KERNEL_DESIGN.md) | Kernel architecture, IPC, scheduling, capabilities, and syscalls |
+| [Boot Process](docs/BOOT_PROCESS.md) | UEFI handoff and KnightBoot protocol |
+| [Hardware Support](docs/HARDWARE_SUPPORT.md) | Architectures, HAL boundaries, and hardware phases |
+| [Security Design](docs/SECURITY_DESIGN.md) | Threat model, memory protections, isolation, and updates |
+| [Development Setup](docs/DEVELOPMENT_SETUP.md) | Toolchain installation and QEMU debugging |
+| [Engineering Roadmap](docs/ROADMAP.md) | Current phase and future implementation milestones |
+| [Architecture Decisions](docs/DECISIONS.md) | Recorded design alternatives and rationale |
 
-## Engineering principles
+## Engineering Principles
 
-1. Prefer open standards and clear architecture boundaries.
-2. Keep architecture-specific code behind hardware abstraction interfaces.
-3. Prioritize safety and stability over synthetic benchmark results.
-4. Verify capabilities with automated tests or reproducible QEMU/hardware runs.
+- Do not copy Linux, Windows, or macOS kernel implementations.
+- Prefer open standards such as UEFI, ACPI, Device Tree, ELF64, PCIe, NVMe, and Vulkan-class GPU interfaces.
+- Keep architecture-specific code behind explicit HAL traits.
+- Prioritize isolation, stability, and memory safety over synthetic benchmarks.
+- Validate claimed behavior through unit tests or reproducible QEMU and hardware runs.
+
+## Contributing
+
+Contributions are welcome as the project moves from Phase 1 scaffolding into kernel implementation. When contributing:
+
+1. Read the relevant design document before changing a subsystem.
+2. Keep architecture-specific code behind the established abstractions.
+3. Add or update tests for behavior you change.
+4. Run `cargo xtask test` and the smallest relevant xtask build before submitting a change.
+
+Open an issue to propose a substantial design change or to discuss implementation work.
+
+## License
+
+KnightOS is dual-licensed under **Apache-2.0 OR MIT**. This license declaration is defined by [Cargo.toml](Cargo.toml).
