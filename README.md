@@ -25,7 +25,7 @@ Check your environment from the repository root:
 ./tools/check-env.sh
 ```
 
-On Windows, run ` .\tools\check-env.ps1` in PowerShell instead.
+On Windows, run `.[0mtools\check-env.ps1` in PowerShell instead.
 
 ### Build and test
 
